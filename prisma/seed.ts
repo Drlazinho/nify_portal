@@ -6,17 +6,17 @@ const prisma = new PrismaClient();
 
 async function main() {
   const existing = await prisma.user.findUnique({
-    where: { nickname: nickname?.toLowerCase() },
+    where: { nickname: nickname },
   });
   if (existing) {
     console.log("Admin drlazinho already exists.");
     return;
   }
-
+  const passwordHash = await bcrypt.hash(password!, 10);
   await prisma.user.create({
     data: {
       nickname: "drlazinho",
-      password,
+      passwordHash,
       role: "ADMIN",
     },
   });
