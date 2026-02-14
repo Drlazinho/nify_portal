@@ -192,55 +192,56 @@ export default function AdminPage() {
           </p>
         )}
 
-        <div className="card">
+        <div className="card" style={{ overflowX: "auto" }}>
           {loading ? (
             <p style={{ color: "var(--text-muted)" }}>Carregando...</p>
           ) : users.length === 0 ? (
             <p style={{ color: "var(--text-muted)" }}>Nenhum usuário cadastrado.</p>
           ) : (
-            <ul style={{ listStyle: "none" }}>
-              {users.map((u) => (
-                <li
-                  key={u.id}
-                  style={{
-                    padding: "0.75rem 0",
-                    borderBottom: "1px solid var(--border)",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <div>
-                    <strong>{u.nickname}</strong>
-                    {u.role === "ADMIN" && (
-                      <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", background: "var(--accent)", padding: "0.15rem 0.4rem", borderRadius: 6 }}>
-                        Admin
-                      </span>
-                    )}
-                    <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                      {u.realName && <span>{u.realName}</span>}
-                      {u.whatsapp && <span> • {u.whatsapp}</span>}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: "0.35rem" }}>
-                    <button type="button" className="btn btn-secondary" style={{ padding: "0.5rem 0.75rem", fontSize: "0.875rem" }} onClick={() => openEdit(u)}>
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      style={{ padding: "0.5rem 0.75rem", fontSize: "0.875rem" }}
-                      onClick={() => handleDelete(u.id)}
-                      disabled={u.nickname === "drlazinho"}
-                    >
-                      Excluir
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Nickname</th>
+                  <th>Nome real</th>
+                  <th>WhatsApp</th>
+                  <th>Função</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u.id}>
+                    <td>
+                      <strong>{u.nickname}</strong>
+                    </td>
+                    <td>{u.realName || "—"}</td>
+                    <td>{u.whatsapp || "—"}</td>
+                    <td>
+                      {u.role === "ADMIN" ? (
+                        <span className="role-badge role-admin">Admin</span>
+                      ) : (
+                        <span className="role-badge role-user">Usuário</span>
+                      )}
+                    </td>
+                    <td>
+                      <div className="table-actions">
+                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => openEdit(u)}>
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(u.id)}
+                          disabled={u.nickname === "drlazinho"}
+                        >
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

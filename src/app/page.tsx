@@ -15,10 +15,10 @@ export default function HomePage() {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <Link href="/admin/login" className="btn btn-primary" style={{ width: "100%" }}>
-              Sou Admin
+              Admin
             </Link>
             <Link href="/user/register" className="btn btn-secondary" style={{ width: "100%" }}>
-              Sou Usuário
+              Membro
             </Link>
           </div>
         </div>

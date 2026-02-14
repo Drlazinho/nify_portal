@@ -47,7 +47,8 @@ export default function UserRegisterPage() {
         <div className="card">
           <h1 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>Cadastro de Usuário</h1>
           <p style={{ color: "var(--text-muted)", marginBottom: "1.5rem", fontSize: "0.9rem" }}>
-            Preencha seus dados para se registrar.
+            Preencha seus dados para se registrar. <br />
+            Só registra um vez, vamos verificar e manda o link do convite.
           </p>
           <form onSubmit={handleSubmit}>
             <div className="input-group">
