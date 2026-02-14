@@ -5,22 +5,26 @@ const password = process.env.INITIAL_ADMIN_PASSWORD?.trim();
 const prisma = new PrismaClient();
 
 async function main() {
-  const existing = await prisma.user.findUnique({
-    where: { nickname: nickname },
-  });
-  if (existing) {
-    console.log("Admin drlazinho already exists.");
+  if (!nickname || !password) {
+    console.log("INITIAL_ADMIN_NICKNAME and INITIAL_ADMIN_PASSWORD must be set to create admin. Skipping.");
     return;
   }
-  const passwordHash = await bcrypt.hash(password!, 10);
+  const existing = await prisma.user.findUnique({
+    where: { nickname },
+  });
+  if (existing) {
+    console.log("Admin already exists.");
+    return;
+  }
+  const passwordHash = await bcrypt.hash(password, 10);
   await prisma.user.create({
     data: {
-      nickname: "drlazinho",
+      nickname,
       passwordHash,
       role: "ADMIN",
     },
   });
-  console.log("Admin drlazinho created with password 123456");
+  console.log("Admin created.");
 }
 
 main()
